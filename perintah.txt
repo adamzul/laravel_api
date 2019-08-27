@@ -1,0 +1,4 @@
+php artisan make:seeder UsersTableSeeder
+php artisan migrate
+php artisan db:seed
+php artisan make:model Item -m
