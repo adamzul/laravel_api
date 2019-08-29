@@ -1,0 +1,4 @@
+membuat api item v
+implementasi auth passport ke api v
+redirect auth passport gagal v
+implementasi scope passport
