@@ -12,8 +12,10 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('login', 'Api\AuthController@login');
-Route::post('register', 'Api\AuthController@register');
+Route::post('register', 'UserController@register');
+Route::post('login', 'UserController@login');
+// Route::post('login', 'Api\AuthController@login');
+// Route::post('register', 'Api\AuthController@register');
 // Route::prefix('v1')->group(function(){
     
 //     Route::group(['middleware' => 'auth:api'], function(){
@@ -21,19 +23,18 @@ Route::post('register', 'Api\AuthController@register');
 //     });
 //    });
 
-Route::get('/not_authenticated', function(Request $request){
-    return response()->json(['message' => 'not authenticated'], 401);
-    // return "tes";
-})->name('not_authenticated');
+// Route::get('/not_authenticated', function(Request $request){
+//     return response()->json(['message' => 'not authenticated'], 401);
+//     // return "tes";
+// })->name('not_authenticated');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('jwt.verify')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::middleware('auth:api')->get('/user/get', 'UserController@get');
+Route::middleware('jwt.verify')->get('/user/get', 'UserController@get');
 
-Route::group(['middleware' => 'auth:api'], function(){
-    Route::post('details', 'API\UserController@details');
-    Route::get('items', 'ItemController@index');
+Route::group(['middleware' => 'jwt.verify'], function(){
+    Route::get('items', 'api\ItemController@index');
     Route::get('items/{id}', 'ItemController@show');
     Route::post('items', 'ItemController@store');
     Route::put('items/{id}', 'ItemController@update');
