@@ -9,17 +9,13 @@
 
         <div class="pull-left">
 
-            <h2>Role Management</h2>
+            <h2> Show User</h2>
 
         </div>
 
         <div class="pull-right">
 
-        @can('role-create')
-
-            <a class="btn btn-success" href="{{ route('roles.create') }}"> Create New Role</a>
-
-            @endcan
+            <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
 
         </div>
 
@@ -28,67 +24,52 @@
 </div>
 
 
-@if ($message = Session::get('success'))
+<div class="row">
 
-    <div class="alert alert-success">
+    <div class="col-xs-12 col-sm-12 col-md-12">
 
-        <p>{{ $message }}</p>
+        <div class="form-group">
+
+            <strong>Name:</strong>
+
+            {{ $user->name }}
+
+        </div>
 
     </div>
 
-@endif
+    <div class="col-xs-12 col-sm-12 col-md-12">
 
+        <div class="form-group">
 
-<table class="table table-bordered">
+            <strong>Email:</strong>
 
-  <tr>
+            {{ $user->email }}
 
-     <th>No</th>
+        </div>
 
-     <th>Name</th>
+    </div>
 
-     <th width="280px">Action</th>
+    <div class="col-xs-12 col-sm-12 col-md-12">
 
-  </tr>
+        <div class="form-group">
 
-    @foreach ($roles as $key => $role)
+            <strong>Roles:</strong>
 
-    <tr>
+            @if(!empty($user->getRoleNames()))
 
-        <td>{{ ++$i }}</td>
+                @foreach($user->getRoleNames() as $v)
 
-        <td>{{ $role->name }}</td>
+                    <label class="badge badge-success">{{ $v }}</label>
 
-        <td>
+                @endforeach
 
-            <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">Show</a>
+            @endif
 
-            @can('role-edit')
+        </div>
 
-                <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edit</a>
+    </div>
 
-            @endcan
-
-            @can('role-delete')
-
-                {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
-
-                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-
-                {!! Form::close() !!}
-
-            @endcan
-
-        </td>
-
-    </tr>
-
-    @endforeach
-
-</table>
-
-
-{!! $roles->render() !!}
-
+</div>
 
 @endsection
