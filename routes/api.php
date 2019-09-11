@@ -12,8 +12,8 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('register', 'UserController@register');
-Route::post('login', 'UserController@login');
+Route::post('register', 'api\AuthController@register');
+Route::post('login', 'api\AuthController@login');
 // Route::post('login', 'Api\AuthController@login');
 // Route::post('register', 'Api\AuthController@register');
 // Route::prefix('v1')->group(function(){
@@ -33,7 +33,7 @@ Route::middleware('jwt.verify')->get('/user', function (Request $request) {
 });
 Route::middleware('jwt.verify')->get('/user/get', 'UserController@get');
 
-Route::group(['middleware' => 'jwt.verify'], function(){
+Route::group(['middleware' => 'api'], function(){
     Route::get('items', 'api\ItemController@index');
     Route::get('items/{id}', 'api\ItemController@show');
     Route::post('items', 'api\ItemController@store');
@@ -41,7 +41,7 @@ Route::group(['middleware' => 'jwt.verify'], function(){
     Route::delete('items/{id}', 'api\ItemController@delete');
 });
 
-Route::group(['middleware' => 'jwt.verify'], function(){
+Route::group(['middleware' => 'auth:api'], function(){
     Route::get('articles', 'api\ArticleController@index');
     Route::get('articles/{id}', 'api\ArticleController@show');
     Route::post('articles', 'api\ArticleController@store');

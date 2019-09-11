@@ -8,12 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
     // use HasApiTokens, Notifiable;
     use Notifiable, HasRoles;
 
-    // protected $guard_name = 'api';
+    protected $guard_name = 'web';
 
     /**
      * The attributes that are mass assignable.
